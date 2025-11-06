@@ -15,6 +15,7 @@ export class BlockFactory implements IEntityFactory<Block,CreateBlockDto,UpdateB
             slug:SlugUtil.generate(input.title),
             title:input.title,
             description:input.description,
+            projectId:input.projectId,
             createAt:new Date(),
             updateAt:new Date(),
             deletedAt:undefined,

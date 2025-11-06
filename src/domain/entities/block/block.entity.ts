@@ -7,12 +7,14 @@ export class Block extends BaseEntity{
     private readonly _slug:string;
     private readonly _title:string;
     private readonly _description?:string;
+    private readonly _projectId:string;
 
     public get version(){return this._version};
     public get order(){return this._order};
     public get slug(){return this._slug};
     public get title(){return this._title};
     public get description(){return this._description};
+    public get projectId(){return this._projectId};
 
     constructor(props:BlockProps) {
         super(props);
@@ -21,6 +23,7 @@ export class Block extends BaseEntity{
         this._title=props.title;
         this._slug=props.slug ?? SlugUtil.generate(this._title);
         this._description=props.description ?? "";
+        this._projectId=props.projectId ?? "";
     }
 
     public incraseVersion(value:number){
@@ -42,6 +45,7 @@ export class Block extends BaseEntity{
             slug:this._slug,
             title:this._title,
             description:this._description,
+            projectId:this._projectId,
             id:super.id,
             createAt:super.createAt,
             updateAt:super.updateAt,

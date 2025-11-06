@@ -3,4 +3,5 @@
     title:string;
     description?:string;
     tenantId?:string;
+    projectId:string;
 }

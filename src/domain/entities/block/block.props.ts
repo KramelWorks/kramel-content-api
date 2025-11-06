@@ -6,4 +6,5 @@ export interface BlockProps extends BaseProps{
     slug:string;
     title:string;
     description?:string;
+    projectId:string;
 }
