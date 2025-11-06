@@ -1,10 +1,11 @@
+import { PaginationUtil } from './../../../shared/utils/pagination.util';
+import type { IRepoMapper } from "../../../domain/contract/mapper/repo-mapper.interface";
 import type { IDefaultRepository } from "../../../domain/contract/repository/default-repository.interface";
 import type { AppOptions } from "../../../shared/types/app-options";
-import type { IDefaultRepoMapper } from "../../contracts/database/default-repo-mapper.interface";
 
 export class DefaultRepository<TDomain,TPersistence> implements IDefaultRepository<TDomain>{
 
-    constructor(private readonly prismaClient:{
+    constructor(protected readonly prismaClient:{
             create: Function;
             update: Function;
             delete: Function;
@@ -12,7 +13,7 @@ export class DefaultRepository<TDomain,TPersistence> implements IDefaultReposito
             findMany: Function;
             findUnique: Function;  
         }
-        ,private readonly mapper:IDefaultRepoMapper<TDomain,TPersistence>) {
+        ,protected readonly mapper:IRepoMapper<TDomain,TPersistence>) {
     }
 
     public async findById(id: string, options?: AppOptions): Promise<TDomain> {
@@ -27,11 +28,15 @@ export class DefaultRepository<TDomain,TPersistence> implements IDefaultReposito
     }
 
     public async findAll(options?: AppOptions): Promise<TDomain[]> {
+        const {skip,take}=PaginationUtil.getParams(options);
+        
         const records = await this.prismaClient.findMany({
            where: { 
                ...options?.includeInactive?{}:{isActive:true},
                ...options?.includeDeleted?{}:{isDeleted:false},
             },
+            skip,
+            take
          });
         const result=records.map(this.mapper.toDomain);
         return result;

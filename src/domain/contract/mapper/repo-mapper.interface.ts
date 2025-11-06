@@ -1,4 +1,4 @@
-export interface IDefaultRepoMapper<TDomain,TPersistence>{
+export interface IRepoMapper<TDomain,TPersistence>{
 
     toDomain(raw:TPersistence):TDomain;
 

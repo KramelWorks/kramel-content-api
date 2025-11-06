@@ -117,9 +117,47 @@ exports.Prisma.TransactionIsolationLevel = makeStrictEnum({
   Serializable: 'Serializable'
 });
 
+exports.Prisma.ProjectModelScalarFieldEnum = {
+  title: 'title',
+  description: 'description',
+  state: 'state',
+  slug: 'slug',
+  version: 'version',
+  tags: 'tags',
+  id: 'id',
+  createAt: 'createAt',
+  updateAt: 'updateAt',
+  deletedAt: 'deletedAt',
+  tenantId: 'tenantId',
+  isActive: 'isActive',
+  isDeleted: 'isDeleted'
+};
+
+exports.Prisma.BlockModelScalarFieldEnum = {
+  version: 'version',
+  order: 'order',
+  slug: 'slug',
+  title: 'title',
+  description: 'description',
+  id: 'id',
+  createAt: 'createAt',
+  updateAt: 'updateAt',
+  deletedAt: 'deletedAt',
+  tenantId: 'tenantId',
+  isActive: 'isActive',
+  isDeleted: 'isDeleted',
+  projectId: 'projectId'
+};
+
+exports.Prisma.SortOrder = {
+  asc: 'asc',
+  desc: 'desc'
+};
+
 
 exports.Prisma.ModelName = {
-
+  ProjectModel: 'ProjectModel',
+  BlockModel: 'BlockModel'
 };
 
 /**

@@ -6,10 +6,49 @@
 
 generator client {
   provider = "prisma-client-js"
-  output   = "../src/generated/prisma"
+  // output   = "../src/generated/prisma"
 }
 
 datasource db {
   provider = "sqlite"
   url      = env("DATABASE_URL")
+}
+
+
+model ProjectModel{
+  title           String  
+  description     String?
+  state           String    
+  slug            String
+  version         Int
+  tags            String?
+  blocks          BlockModel[]
+  id              String          @id   @default(uuid())
+  createAt        DateTime              @default(now())
+  updateAt        DateTime              @updatedAt
+  deletedAt       DateTime?      
+  tenantId        String?
+  isActive        Boolean               @default(true)
+  isDeleted       Boolean               @default(false)
+  @@map("Project")
+  @@unique([slug,version])
+}
+
+model BlockModel{
+  version     Int                 @default(0)
+  order       Int                 @default(1)
+  slug        String
+  title       String
+  description String?
+  id          String    @id       @default(uuid())
+  createAt    DateTime            @default(now())
+  updateAt    DateTime            @updatedAt
+  deletedAt   DateTime?
+  tenantId    String?
+  isActive    Boolean             @default(true)
+  isDeleted   Boolean             @default(false)
+  projectId   String
+  project     ProjectModel        @relation(fields: [projectId],references: [id])
+  @@map("Block")
+  @@unique([slug,version])
 }

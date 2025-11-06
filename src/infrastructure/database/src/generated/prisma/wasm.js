@@ -89,9 +89,47 @@ exports.Prisma.TransactionIsolationLevel = makeStrictEnum({
   Serializable: 'Serializable'
 });
 
+exports.Prisma.ProjectModelScalarFieldEnum = {
+  title: 'title',
+  description: 'description',
+  state: 'state',
+  slug: 'slug',
+  version: 'version',
+  tags: 'tags',
+  id: 'id',
+  createAt: 'createAt',
+  updateAt: 'updateAt',
+  deletedAt: 'deletedAt',
+  tenantId: 'tenantId',
+  isActive: 'isActive',
+  isDeleted: 'isDeleted'
+};
+
+exports.Prisma.BlockModelScalarFieldEnum = {
+  version: 'version',
+  order: 'order',
+  slug: 'slug',
+  title: 'title',
+  description: 'description',
+  id: 'id',
+  createAt: 'createAt',
+  updateAt: 'updateAt',
+  deletedAt: 'deletedAt',
+  tenantId: 'tenantId',
+  isActive: 'isActive',
+  isDeleted: 'isDeleted',
+  projectId: 'projectId'
+};
+
+exports.Prisma.SortOrder = {
+  asc: 'asc',
+  desc: 'desc'
+};
+
 
 exports.Prisma.ModelName = {
-
+  ProjectModel: 'ProjectModel',
+  BlockModel: 'BlockModel'
 };
 /**
  * Create the Client
@@ -122,7 +160,7 @@ const config = {
     "isCustomOutput": true
   },
   "relativeEnvPaths": {
-    "rootEnvPath": "../../../../../../.env",
+    "rootEnvPath": null,
     "schemaEnvPath": "../../../../../../.env"
   },
   "relativePath": "../../../prisma",
@@ -132,6 +170,7 @@ const config = {
     "db"
   ],
   "activeProvider": "sqlite",
+  "postinstall": false,
   "inlineDatasources": {
     "db": {
       "url": {
@@ -140,13 +179,13 @@ const config = {
       }
     }
   },
-  "inlineSchema": "// This is your Prisma schema file,\n// learn more about it in the docs: https://pris.ly/d/prisma-schema\n\n// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?\n// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init\n\ngenerator client {\n  provider = \"prisma-client-js\"\n  output   = \"../src/generated/prisma\"\n}\n\ndatasource db {\n  provider = \"sqlite\"\n  url      = env(\"DATABASE_URL\")\n}\n",
-  "inlineSchemaHash": "b371adf7625c7aa321bb53caf1309ea1cb7f84eaf94d28c9de69fdec6cf88f6b",
+  "inlineSchema": "// This is your Prisma schema file,\n// learn more about it in the docs: https://pris.ly/d/prisma-schema\n\n// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?\n// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init\n\ngenerator client {\n  provider = \"prisma-client-js\"\n  output   = \"../src/generated/prisma\"\n}\n\ndatasource db {\n  provider = \"sqlite\"\n  url      = env(\"DATABASE_URL\")\n}\n\nmodel ProjectModel {\n  title       String\n  description String\n  state       String\n  slug        String\n  version     Int\n  tags        String\n  blocks      BlockModel[]\n  id          String       @id @default(uuid())\n  createAt    DateTime     @default(now())\n  updateAt    DateTime     @updatedAt\n  deletedAt   DateTime\n  tenantId    String\n  isActive    Boolean      @default(true)\n  isDeleted   Boolean      @default(false)\n\n  @@unique([slug, version])\n  @@map(\"Project\")\n}\n\nmodel BlockModel {\n  version     Int          @default(0)\n  order       Int          @default(1)\n  slug        String\n  title       String\n  description String\n  id          String       @id @default(uuid())\n  createAt    DateTime     @default(now())\n  updateAt    DateTime     @updatedAt\n  deletedAt   DateTime\n  tenantId    String\n  isActive    Boolean      @default(true)\n  isDeleted   Boolean      @default(false)\n  projectId   String\n  project     ProjectModel @relation(fields: [projectId], references: [id])\n\n  @@unique([slug, version])\n  @@map(\"Block\")\n}\n",
+  "inlineSchemaHash": "490fa5bd2b1ceccc6837e667005777351d438d6bc8b1a4bba76177660c65f91a",
   "copyEngine": true
 }
 config.dirname = '/'
 
-config.runtimeDataModel = JSON.parse("{\"models\":{},\"enums\":{},\"types\":{}}")
+config.runtimeDataModel = JSON.parse("{\"models\":{\"ProjectModel\":{\"fields\":[{\"name\":\"title\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"description\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"state\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"slug\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"version\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"tags\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"blocks\",\"kind\":\"object\",\"type\":\"BlockModel\",\"relationName\":\"BlockModelToProjectModel\"},{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"createAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"updateAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"deletedAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"tenantId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"isActive\",\"kind\":\"scalar\",\"type\":\"Boolean\"},{\"name\":\"isDeleted\",\"kind\":\"scalar\",\"type\":\"Boolean\"}],\"dbName\":\"Project\"},\"BlockModel\":{\"fields\":[{\"name\":\"version\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"order\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"slug\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"title\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"description\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"createAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"updateAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"deletedAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"tenantId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"isActive\",\"kind\":\"scalar\",\"type\":\"Boolean\"},{\"name\":\"isDeleted\",\"kind\":\"scalar\",\"type\":\"Boolean\"},{\"name\":\"projectId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"project\",\"kind\":\"object\",\"type\":\"ProjectModel\",\"relationName\":\"BlockModelToProjectModel\"}],\"dbName\":\"Block\"}},\"enums\":{},\"types\":{}}")
 defineDmmfProperty(exports.Prisma, config.runtimeDataModel)
 config.engineWasm = {
   getRuntime: async () => require('./query_engine_bg.js'),
