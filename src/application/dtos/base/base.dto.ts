@@ -1,4 +1,5 @@
 export interface BaseDto{
+    id:string;
     createAt?:Date;
     updateAt?:Date;
     deletedAt?:Date;

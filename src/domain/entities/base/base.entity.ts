@@ -1,6 +1,7 @@
 import type { BaseProps } from "./base.props";
-
+import { randomUUID } from "crypto"
 export class BaseEntity{
+    private readonly _id:string;
     private readonly _createAt?:Date;
     private _updateAt?:Date;
     private _deletedAt?:Date;
@@ -8,6 +9,7 @@ export class BaseEntity{
     private _isActive:boolean;
     private _isDeleted:boolean
 
+    public get id(){return this._id};    
     public get createAt(){return this._createAt};
     public get updateAt(){return this._updateAt};
     public get deletedAt(){return this._deletedAt};
@@ -16,6 +18,7 @@ export class BaseEntity{
     public get isDeleted(){return this._isDeleted};
 
     constructor(props:BaseProps) {
+        this._id=props.id ?? randomUUID();
         this._createAt=props.createAt ?? new Date();
         this._updateAt=props.updateAt  ?? new Date();;
         this._deletedAt=props.deletedAt;

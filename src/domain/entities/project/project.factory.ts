@@ -1,3 +1,4 @@
+import { randomUUID } from 'crypto';
 import type { CreateProjectDto } from "../../../application/dtos/project/create-project.dto";
 import type { UpdateProjectDto } from "../../../application/dtos/project/update-project.dto";
 import { SlugUtil } from "../../../shared/utils/slug.util";
@@ -9,6 +10,7 @@ export class ProjectFactory implements IEntityFactory<Project,CreateProjectDto,U
 
     create(input: CreateProjectDto): Project {
         return new Project({
+            id:randomUUID(),
             title:input.title,
             description:input.description,
             state:ProjectState.Draft,
@@ -21,6 +23,7 @@ export class ProjectFactory implements IEntityFactory<Project,CreateProjectDto,U
             tenantId:input.tenantId,
             isActive:true,
             isDeleted:false,
+            blocks:[]
         });
     }
 

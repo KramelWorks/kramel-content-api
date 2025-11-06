@@ -1,4 +1,5 @@
 export interface BaseProps{
+    id:string;
     createAt?:Date;
     updateAt?:Date;
     deletedAt?:Date;

@@ -42,6 +42,7 @@ export class Block extends BaseEntity{
             slug:this._slug,
             title:this._title,
             description:this._description,
+            id:super.id,
             createAt:super.createAt,
             updateAt:super.updateAt,
             deletedAt:super.deletedAt,

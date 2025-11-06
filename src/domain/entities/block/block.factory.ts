@@ -1,3 +1,4 @@
+import { randomUUID } from 'crypto';
 import type { CreateBlockDto } from "../../../application/dtos/block/create-block.dto";
 import type { UpdateBlockDto } from "../../../application/dtos/block/update-block.dto";
 import { SlugUtil } from "../../../shared/utils/slug.util";
@@ -8,6 +9,7 @@ export class BlockFactory implements IEntityFactory<Block,CreateBlockDto,UpdateB
 
     create(input: CreateBlockDto): Block {
         return new Block({
+            id:randomUUID(),
             version:0,
             order:1,
             slug:SlugUtil.generate(input.title),

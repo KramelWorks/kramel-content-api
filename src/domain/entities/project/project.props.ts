@@ -1,4 +1,5 @@
 import type { BaseProps } from "../base/base.props";
+import type { Block } from "../block/block.entity";
 import type { ProjectState } from "./project-state.enum";
 
 export interface ProjectProps extends BaseProps{
@@ -8,4 +9,5 @@ export interface ProjectProps extends BaseProps{
     slug:string;
     version:number;
     tags:string[];
+    blocks?:Block[];
 } 
