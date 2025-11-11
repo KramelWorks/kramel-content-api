@@ -9,7 +9,7 @@ import type { ProjectDto } from "../../dtos/project/project.dto";
 import type { UpdateProjectDto } from '../../dtos/project/update-project.dto';
 import type { IAppMapper } from '../../contract/mapper/app-mapper.interface';
 
-export class FindByIdProjectUseCase implements IUseCase<string,ProjectDto[]>{
+export class FindByTitleProjectUseCase implements IUseCase<string,ProjectDto[]>{
     constructor(
         private readonly repository:IProjectRepository,
         private readonly mapper:IAppMapper<Project,ProjectDto,CreateProjectDto,UpdateProjectDto>) {}

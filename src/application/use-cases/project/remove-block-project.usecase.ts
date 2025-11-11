@@ -11,7 +11,7 @@ import type { CreateProjectDto } from "../../dtos/project/create-project.dto";
 import type { ProjectDto } from "../../dtos/project/project.dto";
 import type { UpdateProjectDto } from "../../dtos/project/update-project.dto";
 
-export class AddBlockProjectUseCase implements IUseCase<AddRemoveBlockDto,ProjectDto>{
+export class RemoveBlockProjectUseCase implements IUseCase<AddRemoveBlockDto,ProjectDto>{
     constructor(
         private readonly repository:IProjectRepository,
         private readonly blockRepository:IBlockRepository,

@@ -9,7 +9,7 @@ import type { CreateProjectDto } from "../../dtos/project/create-project.dto";
 import type { ProjectDto } from "../../dtos/project/project.dto";
 import type { UpdateProjectDto } from "../../dtos/project/update-project.dto";
 
-export class DeactiveProjectUseCase implements IUseCase<string,ProjectDto>{
+export class DeactivatedProjectUseCase implements IUseCase<string,ProjectDto>{
     constructor(
         private readonly repository:IProjectRepository,
         private readonly mapper:IAppMapper<Project,ProjectDto,CreateProjectDto,UpdateProjectDto>
