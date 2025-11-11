@@ -10,7 +10,7 @@ export class Project extends BaseEntity{
     private readonly _description:string;
     private _state:ProjectState;
     private readonly _slug:string;
-    private readonly _version:number;
+    private _version:number;
     private _tags:string[];
     private  readonly _blocks?:Block[];
 
@@ -49,6 +49,10 @@ export class Project extends BaseEntity{
     public addTag(value:string){
         this._tags=[...this._tags,value]
         super.touch();
+    }
+
+    public newVersion(value:number){
+        this._version=value+1;
     }
 
     public removeTag(value:string){

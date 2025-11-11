@@ -8,7 +8,7 @@ export interface IProjectRepository extends IDefaultRepository<Project>{
 
     findByTitle(title:string,options?:AppOptions):Promise<Project[]>;
 
-    findByVersion(version:number,options?:AppOptions):Promise<Project | null>;
+    findByVersion(slug:string,version:number,options?:AppOptions):Promise<Project | null>;
 
     findLastVersion(slug:string,options?:AppOptions):Promise<Project | null>;
 

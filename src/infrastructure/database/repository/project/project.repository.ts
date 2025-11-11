@@ -49,9 +49,10 @@ export class ProjectRepository extends DefaultRepository<Project,ProjectModel> i
         return result;
     }
 
-    public async findByVersion(version: number, options?: AppOptions): Promise<Project | null> {
+    public async findByVersion(slug:string,version: number, options?: AppOptions): Promise<Project | null> {
         const record=await this.prismaClent.projectModel.findFirst({where:{
             version,
+            slug,
             ...options?.includeInactive?{}:{isActive:false},
             ...options?.includeDeleted?{}:{isDeleted:true}
             },

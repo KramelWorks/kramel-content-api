@@ -7,7 +7,7 @@ export class Block extends BaseEntity{
     private readonly _slug:string;
     private readonly _title:string;
     private readonly _description?:string;
-    private readonly _projectId:string;
+    private _projectId:string;
 
     public get version(){return this._version};
     public get order(){return this._order};
@@ -15,7 +15,7 @@ export class Block extends BaseEntity{
     public get title(){return this._title};
     public get description(){return this._description};
     public get projectId(){return this._projectId};
-
+    
     constructor(props:BlockProps) {
         super(props);
         this._version=props.version ?? 0;
@@ -24,6 +24,12 @@ export class Block extends BaseEntity{
         this._slug=props.slug ?? SlugUtil.generate(this._title);
         this._description=props.description ?? "";
         this._projectId=props.projectId ?? "";
+    }
+
+    public setProject(projectId:string){
+        if(this._projectId===projectId) return;
+        this._projectId=projectId;
+        super.touch();
     }
 
     public incraseVersion(value:number){
