@@ -8,7 +8,7 @@ export interface IBlockRepository extends IDefaultRepository<Block>{
 
     findByTitle(title:string,options?:AppOptions):Promise<Block[]>;
 
-    findByVersion(version:number,options?:AppOptions):Promise<Block | null>;
+    findByVersion(slug:string,version:number,options?:AppOptions):Promise<Block | null>;
 
     findLastVersion(slug:string,options?:AppOptions):Promise<Block | null>;
 

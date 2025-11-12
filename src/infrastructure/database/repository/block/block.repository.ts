@@ -47,9 +47,10 @@ export class BlockRepository extends DefaultRepository<Block,BlockModel> impleme
         return result;
     }
 
-    public async findByVersion(version: number, options?: AppOptions): Promise<Block | null> {
+    public async findByVersion(slug:string,version: number, options?: AppOptions): Promise<Block | null> {
         const record=await this.prismaClent.blockModel.findFirst({where:{
             version,
+            slug,
             ...options?.includeInactive?{}:{isActive:false},
             ...options?.includeDeleted?{}:{isDeleted:true}
             },

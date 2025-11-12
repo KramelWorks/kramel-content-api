@@ -32,16 +32,30 @@ export class Block extends BaseEntity{
         super.touch();
     }
 
-    public incraseVersion(value:number){
-        if(this._version===value) return;
-        this._version=value+1;
-        super.touch();
-    }
-
     public changeOrder(value:number){
         if(this._order===value) return;
         this._order=value+1;        
         super.touch();
+    }
+
+    public newVersion(value:number){
+        this._version=value+1;
+    }
+
+    public activate(): void {
+        super.activate();
+    }
+
+    public deactivate(): void {
+        super.deactivate();
+    }
+
+    public delete(): void {
+        super.markAsdeleted();
+    }
+
+    public restore(): void {
+        super.restore();
     }
 
     public toProps():BlockProps{

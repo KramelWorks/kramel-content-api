@@ -8,7 +8,7 @@ import type { CreateProjectDto } from "../../dtos/project/create-project.dto";
 import type { ProjectDto } from "../../dtos/project/project.dto";
 import type { UpdateProjectDto } from '../../dtos/project/update-project.dto';
 import type { IAppMapper } from '../../contract/mapper/app-mapper.interface';
-import type { FindVersion } from '../../dtos/project/find-version.dto';
+import type { FindVersion } from '../../../shared/types/find-version';
 
 export class FindByVersionProjectUseCase implements IUseCase<FindVersion,ProjectDto>{
     constructor(

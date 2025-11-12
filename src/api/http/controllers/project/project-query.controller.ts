@@ -3,7 +3,7 @@ import type { IUseCase } from "../../../../application/contract/use-case/use-cas
 import type { ProjectDto } from "../../../../application/dtos/project/project.dto";
 import { buildAppOptions } from "../../../../shared/helpers/build-app-options.helper";
 import { parseProjectFilter } from "../../../../shared/helpers/filter.helper";
-import type { FindVersion } from "../../../../application/dtos/project/find-version.dto";
+import type { FindVersion } from "../../../../shared/types/find-version";
 import { ApiResult } from "../../../../shared/types/app-result";
 import { AppError } from "../../../../shared/error/app.error";
 
