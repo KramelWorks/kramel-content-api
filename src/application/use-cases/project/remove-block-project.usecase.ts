@@ -24,7 +24,7 @@ export class RemoveBlockProjectUseCase implements IUseCase<AddRemoveBlockDto,Pro
 
             const project=await this.repository.findById(input.id,options);
 
-            if(!project){return ApiResult.fail<ProjectDto>(500,AppError.SERVER_ERROR.message);} 
+            if(!project){return ApiResult.fail<ProjectDto>(404,AppError.NOT_FOUND.message);} 
 
             const block=await this.blockRepository.findById(input.blockId);
 
@@ -36,11 +36,11 @@ export class RemoveBlockProjectUseCase implements IUseCase<AddRemoveBlockDto,Pro
 
             const removeBlock=await this.blockRepository.update(input.blockId,block);    
 
-            if(!removeBlock) {return ApiResult.fail<ProjectDto>(500,AppError.SERVER_ERROR.message);} 
+            if(!removeBlock) {return ApiResult.fail<ProjectDto>(404,AppError.NOT_FOUND.message);} 
 
             const result=this.mapper.toDto(project);
 
-            return ApiResult.ok<ProjectDto>(500,result,AppError.SERVER_ERROR.message);
+            return ApiResult.ok<ProjectDto>(200,result,"Success");
 
         } catch (error) {
             console.log(error);

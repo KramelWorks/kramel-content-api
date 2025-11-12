@@ -10,10 +10,10 @@ import { AppError } from "../../../../shared/error/app.error";
 export class ProjectQueryController{
 
     constructor(
-        private readonly findAllProjectUseCase:IUseCase<null,ProjectDto>,
+        private readonly findAllProjectUseCase:IUseCase<null,ProjectDto[]>,
         private readonly findByIdProjectUseCase:IUseCase<string,ProjectDto>,
-        private readonly findBySlugProjectUseCase:IUseCase<string,ProjectDto>,
-        private readonly findByTitleProjectUseCase:IUseCase<string,ProjectDto>,
+        private readonly findBySlugProjectUseCase:IUseCase<string,ProjectDto[]>,
+        private readonly findByTitleProjectUseCase:IUseCase<string,ProjectDto[]>,
         private readonly findByVersionProjectUseCase:IUseCase<FindVersion,ProjectDto>,
         private readonly findLastVersionProjectUseCase:IUseCase<string,ProjectDto>,
     ) {
@@ -21,7 +21,6 @@ export class ProjectQueryController{
     }
 
     public async find(req:Request,res:Response){
-
         const options=buildAppOptions(req);
         const filter=parseProjectFilter(req);
 

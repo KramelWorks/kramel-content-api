@@ -18,19 +18,29 @@ export class UpdateProjectUseCase implements IUseCase<UpdateProjectDto,ProjectDt
     public async execute(input: UpdateProjectDto, options?: AppOptions): Promise<ApiResult<ProjectDto>> {
         try {
 
+            const effectiveOptions:AppOptions={
+                force:false,
+                page:1,
+                pageSize:10,
+                includeInactive:true,
+                includeDeleted:true,
+            }
+
             const slug=SlugUtil.generate(input.title);
             const project=await this.repository.findBySlug(slug);
             
             let version=null;
 
             if(project.length>0){
-                const lastVersion=await this.repository.findLastVersion(slug);
+                const lastVersion=await this.repository.findLastVersion(slug,effectiveOptions);
                 if(lastVersion?.version){
                   version=lastVersion?.version;
                 }
               }
             
             const update=await this.repository.findById(input.id);
+            
+            if(!update){return ApiResult.fail<ProjectDto>(404,AppError.NOT_FOUND.message);} 
 
             const newProject=this.mapper.update(input,update);
             

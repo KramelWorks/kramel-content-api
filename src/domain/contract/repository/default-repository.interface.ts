@@ -10,7 +10,7 @@ export interface IDefaultRepository<T>{
 
     exists(id:string,options?:AppOptions):Promise<boolean>;
 
-    findById(id:string,options?:AppOptions):Promise<T>
+    findById(id:string,options?:AppOptions):Promise<T | null>
 
     findAll(options?:AppOptions):Promise<T[]>
 

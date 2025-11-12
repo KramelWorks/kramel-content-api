@@ -19,7 +19,7 @@ export class FindAllProjectUseCase implements IUseCase<null,ProjectDto[]>{
 
             const projects=await this.repository.findAll(options);
 
-            if(!projects){return ApiResult.fail<ProjectDto[]>(500,AppError.SERVER_ERROR.message);}
+            if(!projects){return ApiResult.fail<ProjectDto[]>(404,AppError.NOT_FOUND.message);}
             
             const result=projects.map(this.mapper.toDto);
             

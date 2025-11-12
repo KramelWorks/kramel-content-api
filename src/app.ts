@@ -3,8 +3,8 @@ dotenv.config();
 
 import express from "express"
 import cors from "cors"
-import { privateRoute } from "./api/http/routes/private.route";
-import { publicRoute } from "./api/http/routes/public.route";
+import { privateRoute, publicRoute } from "./api/http/routes/default";
+
 
 const app=express();
 
@@ -12,10 +12,10 @@ app.use(express.json());
 
 app.use(cors());
 
-app.use(publicRoute);
+app.use("/",publicRoute);
 
 //ADD Midleware
 
-app.use(privateRoute);
+app.use("/api",privateRoute);
 
 export {app}

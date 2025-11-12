@@ -19,11 +19,11 @@ export class FindByIdProjectUseCase implements IUseCase<string,ProjectDto>{
 
             const project=await this.repository.findById(input,options);
 
-            if(!project){return ApiResult.fail<ProjectDto>(500,AppError.SERVER_ERROR.message);}
+            if(!project){return ApiResult.fail<ProjectDto>(404,AppError.NOT_FOUND.message);}
             
             const result=this.mapper.toDto(project)
             
-            return ApiResult.ok<ProjectDto>(500,result,AppError.SERVER_ERROR.message);
+            return ApiResult.ok<ProjectDto>(200,result,"Success");
 
         } catch (error) {
             console.log(error);

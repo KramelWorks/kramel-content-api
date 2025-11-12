@@ -18,8 +18,8 @@ export class ProjectRepository extends DefaultRepository<Project,ProjectModel> i
 
         const records=await this.prismaClent.projectModel.findMany({where:{
             slug,
-            ...options?.includeInactive?{}:{isActive:false},
-            ...options?.includeDeleted?{}:{isDeleted:true}
+            ...options?.includeInactive?{}:{isActive:true},
+            ...options?.includeDeleted?{}:{isDeleted:false}
             },
             include:{blocks:true},
             skip,
@@ -31,14 +31,15 @@ export class ProjectRepository extends DefaultRepository<Project,ProjectModel> i
     }
 
     public async findByTitle(title: string, options?: AppOptions): Promise<Project[]> {
+       
         const {skip,take}=PaginationUtil.getParams(options);
 
         const records=await this.prismaClent.projectModel.findMany({where:{
             title:{
                 contains:title
             },
-            ...options?.includeInactive?{}:{isActive:false},
-            ...options?.includeDeleted?{}:{isDeleted:true}
+            ...options?.includeInactive?{}:{isActive:true},
+            ...options?.includeDeleted?{}:{isDeleted:false}
             },
             include:{blocks:true},
             skip,
@@ -53,8 +54,8 @@ export class ProjectRepository extends DefaultRepository<Project,ProjectModel> i
         const record=await this.prismaClent.projectModel.findFirst({where:{
             version,
             slug,
-            ...options?.includeInactive?{}:{isActive:false},
-            ...options?.includeDeleted?{}:{isDeleted:true}
+            ...options?.includeInactive?{}:{isActive:true},
+            ...options?.includeDeleted?{}:{isDeleted:false}
             },
             include:{blocks:true},
         });
@@ -65,8 +66,8 @@ export class ProjectRepository extends DefaultRepository<Project,ProjectModel> i
      public async findLastVersion(slug: string, options?: AppOptions): Promise<Project | null> {
         const record=await this.prismaClent.projectModel.findFirst({where:{
             slug,
-            ...options?.includeInactive?{}:{isActive:false},
-            ...options?.includeDeleted?{}:{isDeleted:true}
+            ...options?.includeInactive?{}:{isActive:true},
+            ...options?.includeDeleted?{}:{isDeleted:false}
             },
             orderBy:{version:"desc"}
         });

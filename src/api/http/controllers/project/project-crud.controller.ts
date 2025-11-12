@@ -11,7 +11,7 @@ export class ProjectCrudController{
 
     constructor(
         private readonly createProjectUseCase:IUseCase<CreateProjectDto,ProjectDto>,
-        private readonly removeProjectUseCase:IUseCase<string,ProjectDto>,
+        private readonly removeProjectUseCase:IUseCase<string,boolean>,
         private readonly updateProjectUseCase:IUseCase<UpdateBlockDto,ProjectDto>,
     ) {
          

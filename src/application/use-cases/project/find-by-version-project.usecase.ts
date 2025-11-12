@@ -20,11 +20,11 @@ export class FindByVersionProjectUseCase implements IUseCase<FindVersion,Project
 
             const project=await this.repository.findByVersion(input.slug,input.version,options);
 
-            if(!project){return ApiResult.fail<ProjectDto>(500,AppError.SERVER_ERROR.message);}
+            if(!project){return ApiResult.fail<ProjectDto>(404,AppError.NOT_FOUND.message);}
             
             const result=this.mapper.toDto(project)
             
-            return ApiResult.ok<ProjectDto>(500,result,AppError.SERVER_ERROR.message);
+            return ApiResult.ok<ProjectDto>(200,result,"Success");
 
         } catch (error) {
             console.log(error);

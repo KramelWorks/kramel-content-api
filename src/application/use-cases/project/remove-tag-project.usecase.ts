@@ -22,7 +22,7 @@ export class RemoveTagProjectUseCase implements IUseCase<TagDto,ProjectDto>{
 
             const project=await this.repository.findById(input.id,options);
 
-            if(!project){return ApiResult.fail<ProjectDto>(500,AppError.SERVER_ERROR.message);} 
+            if(!project){return ApiResult.fail<ProjectDto>(404,AppError.NOT_FOUND.message);} 
             
             project.removeTag(input.tag);
 
@@ -32,7 +32,7 @@ export class RemoveTagProjectUseCase implements IUseCase<TagDto,ProjectDto>{
 
             const result=this.mapper.toDto(untagged);
 
-            return ApiResult.ok<ProjectDto>(500,result,AppError.SERVER_ERROR.message);
+            return ApiResult.ok<ProjectDto>(200,result,"Success");
 
         } catch (error) {
             console.log(error);

@@ -16,14 +16,14 @@ export class DefaultRepository<TDomain,TPersistence> implements IDefaultReposito
         ,protected readonly mapper:IRepoMapper<TDomain,TPersistence>) {
     }
 
-    public async findById(id: string, options?: AppOptions): Promise<TDomain> {
+    public async findById(id: string, options?: AppOptions): Promise<TDomain | null> {
         const record = await this.prismaClient.findFirst({
            where: { id,
                ...options?.includeInactive?{}:{isActive:true},
                ...options?.includeDeleted?{}:{isDeleted:false},
             },
          });
-        const result=this.mapper.toDomain(record);
+        const result =record ? this.mapper.toDomain(record) : null;
         return result;
     }
 

@@ -22,6 +22,7 @@ export class ProjectAppMapper implements IAppMapper<Project,ProjectDto,CreatePro
 
     toDto(entity: Project): ProjectDto {
         return {
+            id:entity.id,
             title:entity.title,
             description:entity.description,
             state:entity.state,
@@ -29,7 +30,6 @@ export class ProjectAppMapper implements IAppMapper<Project,ProjectDto,CreatePro
             version:entity.version,
             tags:entity.tags,
             blocks:entity.blocks ?? [],
-            id:entity.id,
             createAt:entity.createAt,
             updateAt:entity.updateAt,
             deletedAt:entity.deletedAt,

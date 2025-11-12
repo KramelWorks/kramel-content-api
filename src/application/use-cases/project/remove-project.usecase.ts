@@ -14,7 +14,7 @@ export class RemoveProjectUseCase implements IUseCase<string,boolean>{
 
             const project=await this.repository.findById(input);
 
-            if(!project){return ApiResult.fail<boolean>(500,AppError.SERVER_ERROR.message);} 
+            if(!project){return ApiResult.fail<boolean>(404,AppError.NOT_FOUND.message);} 
             
             let result=false;
 
@@ -29,7 +29,7 @@ export class RemoveProjectUseCase implements IUseCase<string,boolean>{
 
             if(!result) {return ApiResult.fail<boolean>(500,AppError.SERVER_ERROR.message);} 
 
-            return ApiResult.ok<boolean>(500,result,AppError.SERVER_ERROR.message);
+            return ApiResult.ok<boolean>(200,result,"Success");
 
         } catch (error) {
             console.log(error);

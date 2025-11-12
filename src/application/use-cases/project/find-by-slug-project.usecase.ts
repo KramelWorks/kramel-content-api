@@ -16,8 +16,8 @@ export class FindBySlugProjectUseCase implements IUseCase<string,ProjectDto[]>{
 
     public async execute(input: string, options?: AppOptions): Promise<ApiResult<ProjectDto[]>> {
         try {
-
-            const projects=await this.repository.findByTitle(input,options);
+            console.log(input)
+            const projects=await this.repository.findBySlug(input,options);
             
             const result=projects.map(this.mapper.toDto);
             
