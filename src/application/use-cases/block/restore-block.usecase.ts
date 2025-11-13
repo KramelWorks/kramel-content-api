@@ -24,11 +24,14 @@ export class RestoreBlockUseCase implements IUseCase<string,BlockDto>{
               force: options?.force ?? false,
               page: options?.page ?? 1,
               pageSize: options?.pageSize ?? 10,
+              includeAll:false,
             };
 
             const block=await this.repository.findById(input,effectiveOptions);
 
             if(!block){return ApiResult.fail<BlockDto>(404,AppError.NOT_FOUND.message);} 
+
+            if(!block.isDeleted){return ApiResult.fail<BlockDto>(403,AppError.FORBIDDEN.message);} 
             
             block.restore();
 

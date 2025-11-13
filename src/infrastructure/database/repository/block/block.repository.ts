@@ -15,11 +15,10 @@ export class BlockRepository extends DefaultRepository<Block,BlockModel> impleme
 
     public async findBySlug(slug: string, options?: AppOptions): Promise<Block[]> {
         const {skip,take}=PaginationUtil.getParams(options);
-
         const records=await this.prismaClent.blockModel.findMany({where:{
             slug,
-            ...options?.includeInactive?{}:{isActive:false},
-            ...options?.includeDeleted?{}:{isDeleted:true}
+            ...options?.includeInactive?{}:{isActive:true},
+            ...options?.includeDeleted?{}:{isDeleted:false}
             },
             skip,
             take,
@@ -36,8 +35,8 @@ export class BlockRepository extends DefaultRepository<Block,BlockModel> impleme
             title:{
                 contains:title
             },
-            ...options?.includeInactive?{}:{isActive:false},
-            ...options?.includeDeleted?{}:{isDeleted:true}
+            ...options?.includeInactive?{}:{isActive:true},
+            ...options?.includeDeleted?{}:{isDeleted:false}
             },
             skip,
             take,
@@ -51,8 +50,8 @@ export class BlockRepository extends DefaultRepository<Block,BlockModel> impleme
         const record=await this.prismaClent.blockModel.findFirst({where:{
             version,
             slug,
-            ...options?.includeInactive?{}:{isActive:false},
-            ...options?.includeDeleted?{}:{isDeleted:true}
+            ...options?.includeInactive?{}:{isActive:true},
+            ...options?.includeDeleted?{}:{isDeleted:false}
             },
         });
         const result=record ? this.mapper.toDomain(record) : null;
@@ -62,8 +61,8 @@ export class BlockRepository extends DefaultRepository<Block,BlockModel> impleme
     public async findLastVersion(slug: string, options?: AppOptions): Promise<Block | null> {
         const record=await this.prismaClent.blockModel.findFirst({where:{
             slug,
-            ...options?.includeInactive?{}:{isActive:false},
-            ...options?.includeDeleted?{}:{isDeleted:true}
+            ...options?.includeInactive?{}:{isActive:true},
+            ...options?.includeDeleted?{}:{isDeleted:false}
             },
             orderBy:{version:"desc"}
         });

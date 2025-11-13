@@ -34,7 +34,7 @@ export class Block extends BaseEntity{
 
     public changeOrder(value:number){
         if(this._order===value) return;
-        this._order=value+1;        
+        this._order=value;        
         super.touch();
     }
 

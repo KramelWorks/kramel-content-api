@@ -9,14 +9,17 @@ import type { BlockDto } from "../../dtos/block/block.dto";
 import type { UpdateBlockDto } from '../../dtos/block/update-block.dto';
 import type { IAppMapper } from '../../contract/mapper/app-mapper.interface';
 
-export class FindBySlugBlockUseCase implements IUseCase<string,BlockDto[]>{
+export class FindByTitleBlockUseCase implements IUseCase<string,BlockDto[]>{
     constructor(
         private readonly repository:IBlockRepository,
         private readonly mapper:IAppMapper<Block,BlockDto,CreateBlockDto,UpdateBlockDto>) {}
 
     public async execute(input: string, options?: AppOptions): Promise<ApiResult<BlockDto[]>> {
         try {
-            const blocks=await this.repository.findBySlug(input,options);
+
+            const blocks=await this.repository.findByTitle(input,options);
+
+            if(!blocks){return ApiResult.fail<BlockDto[]>(404,AppError.NOT_FOUND.message);}
             
             const result=blocks.map(this.mapper.toDto);
             

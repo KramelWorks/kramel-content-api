@@ -18,6 +18,7 @@ export class RemoveBlockUseCase implements IUseCase<string,boolean>{
             
             let result=false;
 
+            console.log(options)
             if(options?.force){
                 result=await this.repository.remove(input);    
             }

@@ -11,3 +11,11 @@ export function parseProjectFilter(req: Request): ProjectFilterDto {
     version: req.query.version as string | undefined,
   };
 }
+
+export function parseBlockFilter(req: Request): ProjectFilterDto {
+  return {
+    title: req.query.title as string | undefined,
+    slug: req.query.slug as string | undefined,
+    version: req.query.version as string | undefined,
+  };
+}

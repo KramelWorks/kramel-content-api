@@ -5,6 +5,8 @@ import type { AppOptions } from "../../../shared/types/app-options";
 
 export class DefaultRepository<TDomain,TPersistence> implements IDefaultRepository<TDomain>{
 
+    protected defaultIncludes: Record<string, any> = {};
+
     constructor(protected readonly prismaClient:{
             create: Function;
             update: Function;
@@ -22,6 +24,7 @@ export class DefaultRepository<TDomain,TPersistence> implements IDefaultReposito
                ...options?.includeInactive?{}:{isActive:true},
                ...options?.includeDeleted?{}:{isDeleted:false},
             },
+            ...options?.includeAll ? {include:{...this.defaultIncludes}}:{},
          });
         const result =record ? this.mapper.toDomain(record) : null;
         return result;
@@ -29,12 +32,12 @@ export class DefaultRepository<TDomain,TPersistence> implements IDefaultReposito
 
     public async findAll(options?: AppOptions): Promise<TDomain[]> {
         const {skip,take}=PaginationUtil.getParams(options);
-        
         const records = await this.prismaClient.findMany({
            where: { 
                ...options?.includeInactive?{}:{isActive:true},
                ...options?.includeDeleted?{}:{isDeleted:false},
             },
+            ...options?.includeAll ? {include:{...this.defaultIncludes}}:{},
             skip,
             take
          });

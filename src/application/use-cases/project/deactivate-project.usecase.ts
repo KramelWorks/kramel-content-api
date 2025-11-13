@@ -19,16 +19,19 @@ export class DeactivatedProjectUseCase implements IUseCase<string,ProjectDto>{
         try {
             
             const effectiveOptions: AppOptions = {
-              includeInactive: true,
+              includeInactive: false,
               includeDeleted: false,
               force: options?.force ?? false,
               page: options?.page ?? 1,
               pageSize: options?.pageSize ?? 10,
+              includeAll:false
             };
 
             const project=await this.repository.findById(input,effectiveOptions);
 
             if(!project){return ApiResult.fail<ProjectDto>(404,AppError.NOT_FOUND.message);} 
+
+            if(!project.isActive){return ApiResult.fail<ProjectDto>(403,AppError.FORBIDDEN.message);}
             
             project.deactivate();
 

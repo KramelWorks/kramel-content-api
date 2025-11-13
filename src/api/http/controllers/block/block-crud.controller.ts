@@ -1,33 +1,32 @@
 import type { Request, Response } from "express";
 import type { IUseCase } from "../../../../application/contract/use-case/use-case.interface";
 import type { UpdateBlockDto } from "../../../../application/dtos/block/update-block.dto";
-import type { CreateProjectDto } from "../../../../application/dtos/project/create-project.dto";
-import type { ProjectDto } from "../../../../application/dtos/project/project.dto";
+import type { CreateBlockDto } from "../../../../application/dtos/block/create-block.dto";
+import type { BlockDto } from "../../../../application/dtos/block/block.dto";
 import { ApiResult } from "../../../../shared/types/app-result";
 import { AppError } from "../../../../shared/error/app.error";
-import type { UpdateProjectDto } from "../../../../application/dtos/project/update-project.dto";
 import { buildAppOptions } from "../../../../shared/helpers/build-app-options.helper";
 
-export class ProjectCrudController{
+export class BlockCrudController{
 
     constructor(
-        private readonly createProjectUseCase:IUseCase<CreateProjectDto,ProjectDto>,
-        private readonly removeProjectUseCase:IUseCase<string,boolean>,
-        private readonly updateProjectUseCase:IUseCase<UpdateBlockDto,ProjectDto>,
+        private readonly createBlockUseCase:IUseCase<CreateBlockDto,BlockDto>,
+        private readonly removeBlockUseCase:IUseCase<string,boolean>,
+        private readonly updateBlockUseCase:IUseCase<UpdateBlockDto,BlockDto>,
     ) {
          
     }
 
     public async create(req:Request,res:Response){
 
-        const dto:CreateProjectDto={...req.body};
+        const dto:CreateBlockDto={...req.body};
 
         let result=null;
 
         if(!dto.tenantId || !dto.title){
             result=ApiResult.fail<null>(400,AppError.FIELD_REQUIRED.message);
         }else{
-            result=await this.createProjectUseCase.execute(dto);
+            result=await this.createBlockUseCase.execute(dto);
         }
 
         return res.status(result.statusCode).json(result.toJson());
@@ -35,7 +34,7 @@ export class ProjectCrudController{
 
     public async update(req:Request,res:Response){
 
-        const dto:UpdateProjectDto={...req.body};
+        const dto:UpdateBlockDto={...req.body};
         const {id}=req.params;
 
         let result=null;
@@ -45,7 +44,7 @@ export class ProjectCrudController{
             
         }else{
             dto.id=id;
-            result=await this.updateProjectUseCase.execute(dto);
+            result=await this.updateBlockUseCase.execute(dto);
         }
 
         return res.status(result.statusCode).json(result.toJson());
@@ -60,7 +59,7 @@ export class ProjectCrudController{
             result=ApiResult.fail<null>(400,AppError.FIELD_REQUIRED.message);
             
         }else{
-            result=await this.removeProjectUseCase.execute(id,options);
+            result=await this.removeBlockUseCase.execute(id,options);
         }
 
         return res.status(result.statusCode).json(result.toJson());

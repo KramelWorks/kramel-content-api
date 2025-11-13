@@ -12,6 +12,8 @@ export class ProjectRepository extends DefaultRepository<Project,ProjectModel> i
         super(prismaClent.projectModel,mapper);
     }
 
+    protected defaultIncludes = {blocks:true}
+
     public async findBySlug(slug: string, options?: AppOptions): Promise<Project[]> {
 
         const {skip,take}=PaginationUtil.getParams(options);
@@ -21,7 +23,7 @@ export class ProjectRepository extends DefaultRepository<Project,ProjectModel> i
             ...options?.includeInactive?{}:{isActive:true},
             ...options?.includeDeleted?{}:{isDeleted:false}
             },
-            include:{blocks:true},
+            include:{...this.defaultIncludes},
             skip,
             take,
             orderBy:{version:"desc"}
@@ -41,7 +43,7 @@ export class ProjectRepository extends DefaultRepository<Project,ProjectModel> i
             ...options?.includeInactive?{}:{isActive:true},
             ...options?.includeDeleted?{}:{isDeleted:false}
             },
-            include:{blocks:true},
+            include:{...this.defaultIncludes},
             skip,
             take,
             orderBy:{version:"desc"}
@@ -57,7 +59,7 @@ export class ProjectRepository extends DefaultRepository<Project,ProjectModel> i
             ...options?.includeInactive?{}:{isActive:true},
             ...options?.includeDeleted?{}:{isDeleted:false}
             },
-            include:{blocks:true},
+            include:{...this.defaultIncludes},
         });
         const result=record ? this.mapper.toDomain(record) : null;
         return result;
@@ -69,6 +71,7 @@ export class ProjectRepository extends DefaultRepository<Project,ProjectModel> i
             ...options?.includeInactive?{}:{isActive:true},
             ...options?.includeDeleted?{}:{isDeleted:false}
             },
+            include:{...this.defaultIncludes},
             orderBy:{version:"desc"}
         });
         const result=record ? this.mapper.toDomain(record) : null;

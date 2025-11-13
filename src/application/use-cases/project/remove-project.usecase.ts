@@ -17,7 +17,6 @@ export class RemoveProjectUseCase implements IUseCase<string,boolean>{
             if(!project){return ApiResult.fail<boolean>(404,AppError.NOT_FOUND.message);} 
             
             let result=false;
-
             if(options?.force){
                 result=await this.repository.remove(input);    
             }

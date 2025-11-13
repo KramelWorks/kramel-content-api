@@ -19,17 +19,20 @@ export class DeactivatedBlockUseCase implements IUseCase<string,BlockDto>{
         try {
             
             const effectiveOptions: AppOptions = {
-              includeInactive: true,
+              includeInactive: false,
               includeDeleted: false,
               force: options?.force ?? false,
               page: options?.page ?? 1,
               pageSize: options?.pageSize ?? 10,
+              includeAll:false
             };
 
             const block=await this.repository.findById(input,effectiveOptions);
 
             if(!block){return ApiResult.fail<BlockDto>(404,AppError.NOT_FOUND.message);} 
             
+            if(!block.isActive){return ApiResult.fail<BlockDto>(403,AppError.FORBIDDEN.message);}
+
             block.deactivate();
 
             const deactivated=await this.repository.update(input,block);    

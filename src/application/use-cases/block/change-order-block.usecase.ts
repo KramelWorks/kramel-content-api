@@ -18,15 +18,22 @@ export class ChangeOrderBlockUseCase implements IUseCase<BlockOrderDto,BlockDto>
     public async execute(input: BlockOrderDto, options?: AppOptions): Promise<ApiResult<BlockDto>> {
         try {
 
+
             const blocks=await this.repository.findBySlug(input.slug,options);
+            
+            console.log(blocks.length)
 
             if(blocks.length==0){return ApiResult.fail<BlockDto>(404,AppError.NOT_FOUND.message);}
-            
-            const existingOrder=blocks.find(eo=>eo.order==input.newOrder);
 
-            if(existingOrder){return ApiResult.fail<BlockDto>(403,AppError.FORBIDDEN.message);}
+            const existingOrder=blocks.filter(eo=>eo.order==input.newOrder);
+
+            console.log(existingOrder);
+
+            if(existingOrder.length!=0){return ApiResult.fail<BlockDto>(403,AppError.FORBIDDEN.message);}
 
             const block = blocks.find(b => b.id === input.id);
+            
+            console.log(block)
 
             if(!block){return ApiResult.fail<BlockDto>(404,AppError.NOT_FOUND.message);}
 

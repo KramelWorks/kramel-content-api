@@ -24,11 +24,14 @@ export class RestoreProjectUseCase implements IUseCase<string,ProjectDto>{
               force: options?.force ?? false,
               page: options?.page ?? 1,
               pageSize: options?.pageSize ?? 10,
+              includeAll:false,
             };
 
             const project=await this.repository.findById(input,effectiveOptions);
 
             if(!project){return ApiResult.fail<ProjectDto>(404,AppError.NOT_FOUND.message);} 
+            
+            if(!project.isDeleted){return ApiResult.fail<ProjectDto>(403,AppError.FORBIDDEN.message);} 
             
             project.restore();
 
